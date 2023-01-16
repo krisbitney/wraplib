@@ -28,7 +28,7 @@ describe("RetryResolver", () => {
   it("no retries - resolves wrapper", async () => {
     const uri = new Uri("wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F6");
 
-    const client = getClientWithRetryResolver({ "ipfs": { retries: 0, interval: 0 }});
+    const client = getClientWithRetryResolver({ ipfs: { retries: 0, interval: 0 }});
 
     const resolutionContext = new UriResolutionContext();
     const result = await client.tryResolveUri({ uri, resolutionContext });
@@ -46,7 +46,7 @@ describe("RetryResolver", () => {
   it("two retries - does not resolve", async () => {
     const uri = new Uri("wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7");
 
-    const client = getClientWithRetryResolver({ "ipfs": { retries: 2, interval: 100 }});
+    const client = getClientWithRetryResolver({ ipfs: { retries: 2, interval: 100 }});
 
     const resolutionContext = new UriResolutionContext();
     const result = await client.tryResolveUri({ uri, resolutionContext });

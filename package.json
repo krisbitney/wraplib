@@ -1,7 +1,7 @@
 {
-  "name": "wraplib-js",
+  "name": "wraplib",
   "description": "Utilities for Polywrap Developers",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "license": "MIT",
   "main": "build/index.js",
   "files": [
