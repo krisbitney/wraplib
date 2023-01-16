@@ -12,24 +12,28 @@ import {
   UriResolverLike,
 } from "@polywrap/uri-resolvers-js";
 
-export type UriOrAuthorityRetryOptions = {
+/** configure how additional resolution attempts are handled after an initial resolution attempt fails */
+export type RetryOptions = {
+  /** the number of additional resolution attempts */
   retries: number;
+  /** the duration (in ms) to pause between attempts */
   interval: number;
 };
 
-export type RetryOptions = {
-  [uriOrAuthority: string]: UriOrAuthorityRetryOptions;
+/** A map or uri or authority strings to retry options */
+export type RetryResolverOptions = {
+  [uriOrAuthority: string]: RetryOptions;
 };
 
 export class RetryResolver<TError = undefined> implements IUriResolver<TError> {
   constructor(
     private resolver: IUriResolver<TError>,
-    private options: RetryOptions
+    private options: RetryResolverOptions
   ) {}
 
   static from<TResolverError = unknown>(
     resolver: UriResolverLike,
-    options: RetryOptions
+    options: RetryResolverOptions
   ): RetryResolver<TResolverError> {
     return new RetryResolver(
       UriResolver.from<TResolverError>(resolver),
