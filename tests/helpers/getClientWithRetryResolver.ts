@@ -11,9 +11,9 @@ import { ExtendableUriResolver } from "@polywrap/uri-resolver-extensions-js";
 import { defaultIpfsProviders, } from "@polywrap/client-config-builder-js";
 import { httpPlugin } from "@polywrap/http-plugin-js";
 import { httpResolverPlugin } from "@polywrap/http-resolver-plugin-js";
-import { RetryOptions, RetryResolver } from "../../build";
+import { RetryResolver, RetryResolverOptions } from "../../build";
 
-export const getClientWithRetryResolver = (retryOptions: RetryOptions): PolywrapClient => {
+export const getClientWithRetryResolver = (retryOptions: RetryResolverOptions): PolywrapClient => {
   const resolver = RecursiveResolver.from(
       PackageToWrapperCacheResolver.from(
         [

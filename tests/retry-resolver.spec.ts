@@ -23,7 +23,7 @@ const expectHistory = async (
   expect(receivedCleanHistory).toEqual(expectedCleanHistory);
 };
 
-describe("URI resolution", () => {
+describe("RetryResolver", () => {
 
   it("no retries - resolves wrapper", async () => {
     const uri = new Uri("wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F6");
