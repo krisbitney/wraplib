@@ -78,7 +78,7 @@ export class RetryResolver<TError = undefined> implements IUriResolver<TError> {
       interval = uriOrAuthority.interval;
     }
 
-    while (!isChange && retries-- > 0) {
+    while (retries-- > 0) {
       // sleep
       await new Promise((r) => setTimeout(r, interval));
       const result = await this.resolver.tryResolveUri(uri, client, subContext);
