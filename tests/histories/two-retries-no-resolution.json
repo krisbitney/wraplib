@@ -1,0 +1,45 @@
+ [
+      "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => PackageToWrapperCacheResolver",
+      [
+        "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => UriResolverAggregator",
+        [
+          "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => StaticResolver - Miss",
+          "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => RetryResolver",
+          [
+            "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ExtendableUriResolver",
+            [
+              "wrap://ens/ipfs-resolver.polywrap.eth => PackageToWrapperCacheResolver => wrapper (wrap://ens/ipfs-resolver.polywrap.eth)",
+              [
+                "wrap://ens/ipfs-resolver.polywrap.eth => UriResolverAggregator => package (wrap://ens/ipfs-resolver.polywrap.eth)",
+                [
+                  "wrap://ens/ipfs-resolver.polywrap.eth => StaticResolver - Package (wrap://ens/ipfs-resolver.polywrap.eth) => package (wrap://ens/ipfs-resolver.polywrap.eth)"
+                ]
+              ],
+              "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ResolverExtension (wrap://ens/ipfs-resolver.polywrap.eth)",
+              "wrap://ens/http-resolver.polywrap.eth => PackageToWrapperCacheResolver => wrapper (wrap://ens/http-resolver.polywrap.eth)",
+              [
+                "wrap://ens/http-resolver.polywrap.eth => UriResolverAggregator => package (wrap://ens/http-resolver.polywrap.eth)",
+                [
+                  "wrap://ens/http-resolver.polywrap.eth => StaticResolver - Package (wrap://ens/http-resolver.polywrap.eth) => package (wrap://ens/http-resolver.polywrap.eth)"
+                ]
+              ],
+              "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ResolverExtension (wrap://ens/http-resolver.polywrap.eth)"
+            ],
+            "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ExtendableUriResolver",
+            [
+              "wrap://ens/ipfs-resolver.polywrap.eth => PackageToWrapperCacheResolver (Cache) => wrapper (wrap://ens/ipfs-resolver.polywrap.eth)",
+              "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ResolverExtension (wrap://ens/ipfs-resolver.polywrap.eth)",
+              "wrap://ens/http-resolver.polywrap.eth => PackageToWrapperCacheResolver (Cache) => wrapper (wrap://ens/http-resolver.polywrap.eth)",
+              "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ResolverExtension (wrap://ens/http-resolver.polywrap.eth)"
+            ],
+            "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ExtendableUriResolver",
+            [
+              "wrap://ens/ipfs-resolver.polywrap.eth => PackageToWrapperCacheResolver (Cache) => wrapper (wrap://ens/ipfs-resolver.polywrap.eth)",
+              "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ResolverExtension (wrap://ens/ipfs-resolver.polywrap.eth)",
+              "wrap://ens/http-resolver.polywrap.eth => PackageToWrapperCacheResolver (Cache) => wrapper (wrap://ens/http-resolver.polywrap.eth)",
+              "wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7 => ResolverExtension (wrap://ens/http-resolver.polywrap.eth)"
+            ]
+          ]
+        ]
+      ]
+    ]
