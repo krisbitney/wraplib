@@ -16,7 +16,7 @@
   "dependencies": {
     "@polywrap/core-js": "0.10.0-pre.7",
     "@polywrap/uri-resolvers-js": "0.10.0-pre.7",
-    "@polywrap/uri-resolver-extensions-js": "0.10.0-pre.7"
+    "@polywrap/result": "0.10.0-pre.7"
   },
   "devDependencies": {
     "@polywrap/client-js": "0.10.0-pre.7",
@@ -28,7 +28,6 @@
     "jest": "26.6.3",
     "rimraf": "3.0.2",
     "ts-jest": "26.5.4",
-    "ts-node": "8.10.2",
     "typescript": "4.6.4",
     "@typescript-eslint/eslint-plugin": "5.48.1",
     "@typescript-eslint/parser": "5.48.1",
