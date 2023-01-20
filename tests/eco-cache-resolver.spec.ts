@@ -1,13 +1,14 @@
-import { Uri, UriResolutionContext } from "@polywrap/core-js";
-import { expectHistory } from "./helpers/expectHistory";
-import { RetryResolver, RetryResolverOptions } from "../build";
-import { ClientConfigBuilder, defaultPackages, PolywrapClient } from "@polywrap/client-js";
 import {
-  PackageToWrapperCacheResolver,
-  RecursiveResolver,
-  StaticResolver,
-  WrapperCache,
-} from "@polywrap/uri-resolvers-js";
+  IUriResolutionContext,
+  Result,
+  Uri,
+  UriPackageOrWrapper,
+  UriResolutionContext,
+} from "@polywrap/core-js";
+import { expectHistory } from "./helpers/expectHistory";
+import { ClientConfigBuilder, defaultPackages, PolywrapClient } from "@polywrap/client-js";
+import { RecursiveResolver, StaticResolver, WrapperCache } from "@polywrap/uri-resolvers-js";
+import { EcoCacheResolver } from "../build";
 import { ipfsPlugin } from "@polywrap/ipfs-plugin-js";
 import { ipfsResolverPlugin } from "@polywrap/ipfs-resolver-plugin-js";
 import { httpPlugin } from "@polywrap/http-plugin-js";
@@ -17,9 +18,9 @@ import { defaultIpfsProviders } from "@polywrap/client-config-builder-js";
 
 jest.setTimeout(200000);
 
-const getClientWithRetryResolver = (retryOptions: RetryResolverOptions): PolywrapClient => {
+const getClientWithEcoCacheResolver = (): PolywrapClient => {
   const resolver = RecursiveResolver.from(
-    PackageToWrapperCacheResolver.from(
+    EcoCacheResolver.from(
       [
         StaticResolver.from([
           {
@@ -39,10 +40,7 @@ const getClientWithRetryResolver = (retryOptions: RetryResolverOptions): Polywra
             package: httpResolverPlugin({})
           }
         ]),
-        new RetryResolver(
-          new ExtendableUriResolver(),
-          retryOptions
-        )
+        new ExtendableUriResolver(),
       ],
       new WrapperCache()
     )
@@ -67,39 +65,49 @@ const getClientWithRetryResolver = (retryOptions: RetryResolverOptions): Polywra
   return new PolywrapClient(config, { noDefaults: true });
 };
 
-describe("RetryResolver", () => {
+describe("EcoCacheResolver", () => {
 
-  it("resolves wrapper without using retries", async () => {
+  it("repeated calls with same uri trigger only one network request", async () => {
     const uri = new Uri("wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F6");
 
-    const client = getClientWithRetryResolver({ ipfs: { retries: 2, interval: 100 }});
+    const client = getClientWithEcoCacheResolver();
 
-    const resolutionContext = new UriResolutionContext();
-    const result = await client.tryResolveUri({ uri, resolutionContext });
+    const invocations: Promise<Result<UriPackageOrWrapper, unknown>>[] = [];
+    const resolutionContexts: IUriResolutionContext[] = []
 
-    if (!result.ok) throw result.error;
+    for (let i = 0; i < 10; i++) {
+      const resolutionContext = new UriResolutionContext();
+      const result = client.tryResolveUri({ uri, resolutionContext });
+      invocations.push(result);
+      resolutionContexts.push(resolutionContext);
+    }
 
-    await expectHistory(
-      resolutionContext.getHistory(),
-      "no-retries-resolves"
-    );
+    const resolutionResults = await Promise.all(invocations);
 
-    expect(result.value.type).toEqual("wrapper");
-  });
+    let foundFirst = false;
 
-  it("two retries - does not resolve", async () => {
-    const uri = new Uri("wrap://ipfs/QmdEMfomFW1XqoxcsCEnhujn9ebQezUXw8pmwLtecyR6F7");
+    for (let i = 0; i < invocations.length; i++) {
+      const result = resolutionResults[i];
+      const resolutionContext = resolutionContexts[i];
 
-    const client = getClientWithRetryResolver({ ipfs: { retries: 2, interval: 100 }});
+      if (!result.ok) throw result.error;
 
-    const resolutionContext = new UriResolutionContext();
-    const result = await client.tryResolveUri({ uri, resolutionContext });
+      if (!foundFirst) {
+        await expectHistory(
+          resolutionContext.getHistory(),
+          "resolve-ipfs-without-cache"
+        );
+        expect(result.value.type).toEqual("wrapper");
+        foundFirst = true;
+        continue;
+      }
 
-    if (!result.ok) throw result.error;
+      await expectHistory(
+        resolutionContext.getHistory(),
+        "resolve-ipfs-with-cache"
+      );
 
-    await expectHistory(
-      resolutionContext.getHistory(),
-      "two-retries-no-resolution"
-    );
+      expect(result.value.type).toEqual("wrapper");
+    }
   });
 });
