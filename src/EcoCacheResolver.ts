@@ -78,9 +78,8 @@ export class EcoCacheResolver<TError> implements IUriResolver<TError | Error> {
 
     if (result.ok) {
       result = await this.cacheResult(result, subContext);
+      this.cancelMutex(uri);
     }
-
-    this.cancelMutex(uri);
 
     resolutionContext.trackStep({
       sourceUri: uri,
