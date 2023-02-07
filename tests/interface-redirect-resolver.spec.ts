@@ -2,7 +2,7 @@ import { UriResolutionContext } from "@polywrap/core-js";
 import { expectHistory, mockPluginRegistration } from "./helpers";
 import { ClientConfigBuilder, PolywrapClient } from "@polywrap/client-js";
 import { RecursiveResolver } from "@polywrap/uri-resolvers-js";
-import { InterfaceRedirectResolver } from "../src/InterfaceRedirectResolver";
+import { InterfaceRedirectResolver } from "../build";
 
 jest.setTimeout(200000);
 
