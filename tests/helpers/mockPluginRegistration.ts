@@ -1,7 +1,7 @@
-import { Uri } from "@polywrap/core-js";
+import { IUriPackage, Uri } from "@polywrap/core-js";
 import { PluginPackage } from "@polywrap/plugin-js";
 
-export const mockPluginRegistration = (uri: string | Uri) => {
+export const mockPluginRegistration = (uri: string | Uri): IUriPackage<Uri> => {
   return {
     uri: Uri.from(uri),
     package: PluginPackage.from(
