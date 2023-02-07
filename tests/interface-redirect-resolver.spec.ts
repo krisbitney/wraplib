@@ -1,30 +1,22 @@
 import { UriResolutionContext } from "@polywrap/core-js";
 import { expectHistory } from "./helpers/expectHistory";
-import { ClientConfigBuilder, defaultPackages, PolywrapClient } from "@polywrap/client-js";
-import { RecursiveResolver, StaticResolver } from "@polywrap/uri-resolvers-js";
-import { ipfsResolverPlugin } from "@polywrap/ipfs-resolver-plugin-js";
-import { ExtendableUriResolver } from "@polywrap/uri-resolver-extensions-js";
+import { ClientConfigBuilder, PolywrapClient } from "@polywrap/client-js";
+import { RecursiveResolver } from "@polywrap/uri-resolvers-js";
 import { InterfaceRedirectResolver } from "../src/InterfaceRedirectResolver";
+import { mockPluginRegistration } from "./helpers/mockPluginRegistration";
 
 jest.setTimeout(200000);
 
-const getClientWithInterfaceRedirectResolver = (): PolywrapClient => {
+const getClientWithInterfaceRedirectResolver = (interfaceUri: string, packageUri: string): PolywrapClient => {
   const resolver = RecursiveResolver.from([
-    StaticResolver.from([
-      {
-        uri: defaultPackages.ipfsResolver,
-        package: ipfsResolverPlugin({}),
-      },
-    ]),
+    mockPluginRegistration(packageUri),
     new InterfaceRedirectResolver(),
   ]);
 
   const config = new ClientConfigBuilder(undefined, resolver)
     .addInterfaceImplementations(
-      ExtendableUriResolver.extInterfaceUri,
-      [
-        defaultPackages.ipfsResolver,
-      ]
+      interfaceUri,
+      [packageUri]
     )
     .buildCoreConfig();
 
@@ -34,12 +26,13 @@ const getClientWithInterfaceRedirectResolver = (): PolywrapClient => {
 describe("RetryResolver", () => {
 
   it("redirects from interface uri to implementation", async () => {
-    const client = getClientWithInterfaceRedirectResolver();
+    const interfaceUri = "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0";
+    const packageUri = "wrap://package/uri-resolver";
+    const client = getClientWithInterfaceRedirectResolver(interfaceUri, packageUri);
 
     // resolve uri
-    const uri = ExtendableUriResolver.extInterfaceUri;
     const resolutionContext = new UriResolutionContext();
-    const result = await client.tryResolveUri({ uri, resolutionContext });
+    const result = await client.tryResolveUri({ uri: interfaceUri, resolutionContext });
 
     if (!result.ok) throw result.error;
 
@@ -49,6 +42,6 @@ describe("RetryResolver", () => {
     );
 
     expect(result.value.type).toEqual("package");
-    expect(result.value.uri.uri).toEqual("wrap://ens/ipfs-resolver.polywrap.eth");
+    expect(result.value.uri.uri).toEqual(packageUri);
   });
 });

@@ -20,6 +20,7 @@
     "async-mutex": "0.4.0"
   },
   "devDependencies": {
+    "@polywrap/plugin-js": "0.10.0-pre.7",
     "@polywrap/client-js": "0.10.0-pre.7",
     "@polywrap/http-plugin-js": "0.10.0-pre.7",
     "@polywrap/http-resolver-plugin-js": "0.10.0-pre.7",
