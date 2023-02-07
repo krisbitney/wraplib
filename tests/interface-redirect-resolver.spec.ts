@@ -1,9 +1,8 @@
 import { UriResolutionContext } from "@polywrap/core-js";
-import { expectHistory } from "./helpers/expectHistory";
+import { expectHistory, mockPluginRegistration } from "./helpers";
 import { ClientConfigBuilder, PolywrapClient } from "@polywrap/client-js";
 import { RecursiveResolver } from "@polywrap/uri-resolvers-js";
 import { InterfaceRedirectResolver } from "../src/InterfaceRedirectResolver";
-import { mockPluginRegistration } from "./helpers/mockPluginRegistration";
 
 jest.setTimeout(200000);
 
@@ -23,7 +22,7 @@ const getClientWithInterfaceRedirectResolver = (interfaceUri: string, packageUri
   return new PolywrapClient(config, { noDefaults: true });
 };
 
-describe("RetryResolver", () => {
+describe("InterfaceRedirectResolver", () => {
 
   it("redirects from interface uri to implementation", async () => {
     const interfaceUri = "wrap://ens/wrappers.polywrap.eth:uri-resolver-ext@1.1.0";

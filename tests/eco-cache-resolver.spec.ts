@@ -5,7 +5,7 @@ import {
   UriPackageOrWrapper,
   UriResolutionContext,
 } from "@polywrap/core-js";
-import { expectHistory } from "./helpers/expectHistory";
+import { expectHistory } from "./helpers";
 import { ClientConfigBuilder, defaultPackages, PolywrapClient } from "@polywrap/client-js";
 import { RecursiveResolver, StaticResolver, WrapperCache } from "@polywrap/uri-resolvers-js";
 import { EcoCacheResolver } from "../build";

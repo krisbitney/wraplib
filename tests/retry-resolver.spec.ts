@@ -1,5 +1,5 @@
 import { Uri, UriResolutionContext } from "@polywrap/core-js";
-import { expectHistory } from "./helpers/expectHistory";
+import { expectHistory } from "./helpers";
 import { RetryResolver, RetryResolverOptions } from "../build";
 import { ClientConfigBuilder, defaultPackages, PolywrapClient } from "@polywrap/client-js";
 import {
